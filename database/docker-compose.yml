@@ -1,7 +1,6 @@
 services:
   mysql:
     image: mysql:8.0.28
-    platform: linux/amd64
     container_name: mysql-container
     ports:
       - "3306:3306"
@@ -11,4 +10,3 @@ services:
       TZ: "Asia/Tokyo"
     volumes:
       - ./init:/docker-entrypoint-initdb.d
-      - ./mysql/db:/var/lib/mysql
