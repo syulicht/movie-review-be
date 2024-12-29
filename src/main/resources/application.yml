@@ -12,4 +12,7 @@ spring:
 tmdb:
   api-access-token: ${TMDB_API_ACCESS_TOKEN}
 
+hmac:
+  secret: ${HMAC_SECRET}
+
 
