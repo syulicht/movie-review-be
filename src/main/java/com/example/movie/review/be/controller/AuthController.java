@@ -1,6 +1,6 @@
 package com.example.movie.review.be.controller;
 
-import com.example.movie.review.be.service.UserService;
+import com.example.movie.review.be.service.AuthService;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
-  private final UserService userService;
+  private final AuthService authService;
 
   public record LoginRequest(@NotBlank @Email String email, @NotBlank String password) {}
 
@@ -27,7 +27,7 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<String> login(@RequestBody LoginRequest request) {
     try {
-      String token = userService.loginUser(request.email, request.password);
+      String token = authService.loginUser(request.email, request.password);
       HttpHeaders httpHeaders = new HttpHeaders();
       httpHeaders.add("Authorization", token);
       return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
@@ -38,7 +38,7 @@ public class AuthController {
 
   @PostMapping("/signUp")
   public ResponseEntity<String> signUp(@RequestBody SignUpRequest request) {
-    String token = userService.signUpUser(request.name, request.email, request.password);
+    String token = authService.signUpUser(request.name, request.email, request.password);
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.add("Authorization", token);
     return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
