@@ -17,7 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfiguration {
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain securityFilterChain(
+      HttpSecurity http, HmacConfiguration hmacConfiguration) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable);
     http.authorizeHttpRequests(
         (requests) ->
@@ -26,7 +27,8 @@ public class SecurityConfiguration {
                 .permitAll()
                 .anyRequest()
                 .authenticated());
-    http.addFilterBefore(new AuthorizeFilter(), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(
+        new AuthorizeFilter(hmacConfiguration), UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 
