@@ -23,7 +23,7 @@ public class SecurityConfiguration {
     http.authorizeHttpRequests(
         (requests) ->
             requests
-                .requestMatchers("/auth/login", "/auth/signUp")
+                .requestMatchers("/auth/**", "/movies/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated());

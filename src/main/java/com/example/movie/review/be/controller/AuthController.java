@@ -41,6 +41,6 @@ public class AuthController {
     String token = authService.signUpUser(request.name, request.email, request.password);
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.add("Authorization", token);
-    return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+    return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
   }
 }

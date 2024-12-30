@@ -8,7 +8,7 @@ paths:
     get:
       summary: おすすめの映画リストを返却する
       responses:
-        '200':
+        "200":
           description: 映画のリスト
           content:
             application/json:
@@ -18,7 +18,75 @@ paths:
                   movies:
                     type: array
                     items:
-                      $ref: '#/components/schemas/MovieSummary'
+                      $ref: "#/components/schemas/MovieSummary"
+  /movies/{movieId}:
+    get:
+      summary: 映画の詳細情報を返却する
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          description: "映画ID"
+          schema:
+            type: string
+            example: "12345"
+      responses:
+        "200":
+          description: 映画の詳細情報とレビュー一覧
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MovieDetail"
+  /auth/signUp:
+    post:
+      summary: ユーザー登録をする
+      responses:
+        "201":
+          description: ユーザー登録成功
+          headers:
+            Authorization:
+              description: アクセストークン
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+
+  /auth/login:
+    post:
+      summary: ログインをする
+      responses:
+        "200":
+          description: ログイン成功
+          headers:
+            Authorization:
+              description: アクセストークン
+              schema:
+                type: string
+        "401":
+          description: 認証に失敗
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+
 components:
   schemas:
     MovieSummary:
@@ -36,3 +104,65 @@ components:
           minimum: 0
           maximum: 5.00
           multipleOf: 0.01
+    MovieDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        overview:
+          type: string
+        backdrop_url:
+          type: string
+        poster_url:
+          type: string
+        release_date:
+          type: string
+          example: "2024-12-31"
+        runtime:
+          type: integer
+        production_countries:
+          type: array
+          items:
+            type: string
+            example: "日本"
+        genres:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        rating:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 5.00
+          multipleOf: 0.01
+        reviews:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              content:
+                type: string
+              rating:
+                type: number
+                format: double
+                minimum: 0
+                maximum: 5.00
+                multipleOf: 0.01
+              user:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  icon_url:
+                    type: string
