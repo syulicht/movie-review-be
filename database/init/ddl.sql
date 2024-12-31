@@ -19,7 +19,7 @@ COLLATE=utf8mb4_bin;
 CREATE TABLE review (
     id INT NOT NULL AUTO_INCREMENT,
     content TEXT,
-    rating DECIMAL NOT NULL,
+    rating INT NOT NULL,
     user_id INT NOT NULL,
     movie_id INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

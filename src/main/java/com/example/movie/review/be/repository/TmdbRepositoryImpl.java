@@ -1,6 +1,7 @@
 package com.example.movie.review.be.repository;
 
 import com.example.movie.review.be.configuration.TmdbConfiguration;
+import com.example.movie.review.be.domain.tmdb.TmdbMovieDetail;
 import com.example.movie.review.be.domain.tmdb.TmdbMovieDiscoverResult;
 import java.time.LocalDate;
 import java.util.List;
@@ -37,6 +38,23 @@ public class TmdbRepositoryImpl implements TmdbRepository {
     final var result =
         restTemplate.exchange(url, HttpMethod.GET, entity, TmdbMovieDiscoverResult.class);
 
+    return result.getBody();
+  }
+
+  @Override
+  public TmdbMovieDetail getMovieDetail(Integer movieId) {
+    final var url =
+        UriComponentsBuilder.fromUriString("https://api.themoviedb.org/3/movie/{movieId}")
+            .queryParam("language", "ja")
+            .buildAndExpand(movieId)
+            .toUriString();
+
+    final var header = new HttpHeaders();
+    header.setAccept(List.of(MediaType.APPLICATION_JSON));
+    header.add("Authorization", "Bearer " + tmdbConfiguration.getApiAccessToken());
+    final var entity = new HttpEntity<>(null, header);
+
+    final var result = restTemplate.exchange(url, HttpMethod.GET, entity, TmdbMovieDetail.class);
     return result.getBody();
   }
 }
