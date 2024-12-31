@@ -15,14 +15,10 @@ public class ReviewService {
   private final UserWithoutCredentialRepository userWithoutCredentialRepository;
 
   public void addReview(String userId, Integer movieId, ReviewLimitedWithContentAndRating review) {
-    try {
-      final var userOptional = userWithoutCredentialRepository.findById(Integer.parseInt(userId));
-      final UserWithoutCredential user =
-          userOptional.orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
-      Review newReview = new Review(review.getContent(), review.getRating(), user, movieId);
-      reviewRepository.save(newReview);
-    } catch (Exception e) {
-      throw e;
-    }
+    final var userOptional = userWithoutCredentialRepository.findById(Integer.parseInt(userId));
+    final UserWithoutCredential user =
+        userOptional.orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+    Review newReview = new Review(null, review.getContent(), review.getRating(), user, movieId);
+    reviewRepository.save(newReview);
   }
 }
