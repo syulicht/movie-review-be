@@ -23,4 +23,11 @@ public class Review {
   private UserWithoutCredential user;
 
   private Integer movieId;
+
+  public Review(String content, Integer rating, UserWithoutCredential user, Integer movieId) {
+    this.content = content;
+    this.rating = rating;
+    this.user = user;
+    this.movieId = movieId;
+  }
 }
