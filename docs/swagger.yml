@@ -37,6 +37,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MovieDetail"
+  /reviews/{movieId}:
+    post:
+      summary: 映画に対してレビューを投稿する
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          description: "映画ID"
+          schema:
+            type: string
+            example: "12345"
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            example: "Bearer xxxxx"
+          required: true
+          description: アクセストークン
+      responses:
+        "201":
+          description: レビュー投稿成功
+        "403":
+          description: アクセストークンが無効
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                rating:
+                  type: integer
+
   /auth/signUp:
     post:
       summary: ユーザー登録をする
