@@ -19,6 +19,50 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/MovieSummary"
+  /movies/search:
+    get:
+      summary: 映画の検索結果を返却する
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          description: 検索キーワード
+          schema:
+            type: string
+            example: "ハリーポッター"
+        - name: page
+          in: query
+          required: false
+          description: ページ指定
+          schema:
+            type: integer
+            example: 2
+        - name: sort
+          in: query
+          required: false
+          description: ソート条件
+          schema:
+            type: string
+            enum:
+              - popular
+              - rating
+              - release_date
+      responses:
+        "200":
+          description: 映画のリスト
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  count:
+                    type: integer
+                  movies:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/MovieSummary"
   /movies/{movieId}:
     get:
       summary: 映画の詳細情報を返却する
