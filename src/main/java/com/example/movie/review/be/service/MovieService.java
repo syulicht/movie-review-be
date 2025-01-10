@@ -8,6 +8,7 @@ import com.example.movie.review.be.repository.ReviewRepository;
 import com.example.movie.review.be.repository.TmdbRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,5 +33,13 @@ public class MovieService {
     final var averageReviews =
         averageReviewsOptional.isPresent() ? averageReviewsOptional.getAsDouble() : 0;
     return detail.toMovieDetail(averageReviews, reviews);
+  }
+
+  public Pair<List<MovieSummary>, Integer> searchMovies(String query, Integer page) {
+    final var tmdbMovieDiscoverResult = tmdbRepository.searchMovies(query, page);
+
+    return Pair.of(
+        tmdbMovieDiscoverResult.getResults().stream().map(m -> m.toMovieSummary(5.0)).toList(),
+        tmdbMovieDiscoverResult.getTotalResults());
   }
 }

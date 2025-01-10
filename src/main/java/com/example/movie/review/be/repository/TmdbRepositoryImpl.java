@@ -57,4 +57,26 @@ public class TmdbRepositoryImpl implements TmdbRepository {
     final var result = restTemplate.exchange(url, HttpMethod.GET, entity, TmdbMovieDetail.class);
     return result.getBody();
   }
+
+  @Override
+  public TmdbMovieDiscoverResult searchMovies(String query, Integer page) {
+    final var url =
+        UriComponentsBuilder.fromUriString("https://api.themoviedb.org/3/search/movie")
+            .queryParam("language", "ja")
+            .queryParam("region", "JP")
+            .queryParam("query", query)
+            .queryParam("page", page)
+            .build()
+            .toUriString();
+
+    final var header = new HttpHeaders();
+    header.setAccept(List.of(MediaType.APPLICATION_JSON));
+    header.add("Authorization", "Bearer " + tmdbConfiguration.getApiAccessToken());
+    final var entity = new HttpEntity<>(null, header);
+
+    final var result =
+        restTemplate.exchange(url, HttpMethod.GET, entity, TmdbMovieDiscoverResult.class);
+
+    return result.getBody();
+  }
 }

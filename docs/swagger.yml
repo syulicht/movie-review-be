@@ -23,10 +23,10 @@ paths:
     get:
       summary: 映画の検索結果を返却する
       parameters:
-        - name: keyword
+        - name: query
           in: query
           required: false
-          description: 検索キーワード
+          description: 検索クエリ
           schema:
             type: string
             example: "ハリーポッター"
