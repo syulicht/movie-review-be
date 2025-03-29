@@ -4,9 +4,8 @@ import com.example.movie.review.be.domain.LoginUserDetails;
 import com.example.movie.review.be.domain.User;
 import com.example.movie.review.be.domain.UserWithoutCredential;
 import com.example.movie.review.be.repository.UserRepository;
-import java.util.Optional;
-
 import com.example.movie.review.be.repository.UserWithoutCredentialRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
