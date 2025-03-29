@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/account")
 public class AccountController {
-  UserService userService;
+  final UserService userService;
 
   @GetMapping("")
   public ResponseEntity<Object> getAccountInfo() {
@@ -24,6 +24,6 @@ public class AccountController {
     if (user.isEmpty()) {
       return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<>(user, HttpStatus.CREATED);
+    return new ResponseEntity<>(user, HttpStatus.OK);
   }
 }
